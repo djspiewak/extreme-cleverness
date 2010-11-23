@@ -22,7 +22,7 @@ class FingerQueue[+A] private (deque: FingerTree[A])
   
   def +[B >: A](b: B) = enqueue(b)
   
-  def enqueue[B >: A](b: B) = new FingerQueue(deque + b)
+  def enqueue[B >: A](b: B) = new FingerQueue(deque :+ b)
   
   def dequeue: (A, FingerQueue[A]) = (head, tail)
   

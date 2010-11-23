@@ -11,7 +11,7 @@ object FingerTree {
     def tailRight: FingerTree[A]
     
     def +:[B >: A](b: B): FingerTree[B]
-    def +[B >: A](b: B): FingerTree[B]
+    def :+[B >: A](b: B): FingerTree[B]
     
     def viewLeft: FTViewLeft[FingerTree, A]
     def viewRight: FTViewRight[FingerTree, A]
@@ -30,7 +30,7 @@ object FingerTree {
     
     def +:[B >: A](b: B) = Deep(One(b), Empty, One(a))
     
-    def +[B >: A](b: B) = Deep(One(a), Empty, One(b))
+    def :+[B >: A](b: B) = Deep(One(a), Empty, One(b))
     
     def viewLeft = FTConsLeft[FingerTree, A](a, Empty)
     def viewRight = FTConsRight[FingerTree, A](Empty, a)
@@ -58,12 +58,12 @@ object FingerTree {
     
     def +:[B >: A](b: B) = prefix match {
       case Four(d, e, f, g) => Deep(Two(b, d), Node3(d, e, f) +: tree, suffix)
-      case partial => Deep(b :: partial, tree, suffix)
+      case partial => Deep(b +: partial, tree, suffix)
     }
     
-    def +[B >: A](b: B) = suffix match {
-      case Four(g, f, e, d) => Deep(prefix, tree + Node3(g, f, e), Two(d, b))
-      case partial => Deep(prefix, tree, partial + b)
+    def :+[B >: A](b: B) = suffix match {
+      case Four(g, f, e, d) => Deep(prefix, tree :+ Node3(g, f, e), Two(d, b))
+      case partial => Deep(prefix, tree, partial :+ b)
     }
     
     def viewLeft = {
@@ -112,7 +112,7 @@ object FingerTree {
     
     def +:[A](a: A) = Single(a)
     
-    def +[A](a: A) = Single(a)
+    def :+[A](a: A) = Single(a)
     
     def viewLeft = FTNilLeft[FingerTree]()
     def viewRight = FTNilRight[FingerTree]()
@@ -182,8 +182,8 @@ object FingerTree {
     val headRight: A
     def tailRight: Digit[A]
     
-    def ::[B >: A](b: B): Digit[B]
-    def +[B >: A](b: B): Digit[B]
+    def +:[B >: A](b: B): Digit[B]
+    def :+[B >: A](b: B): Digit[B]
     
     def toTree: FingerTree[A]
     
@@ -197,8 +197,8 @@ object FingerTree {
     val headRight = a1
     def tailRight = throw new NoSuchElementException("tail on digit: one")
     
-    def ::[B >: A](b: B) = Two(b, a1)
-    def +[B >: A](b: B) = Two(a1, b)
+    def +:[B >: A](b: B) = Two(b, a1)
+    def :+[B >: A](b: B) = Two(a1, b)
     
     def toTree = Single(a1)
     
@@ -219,8 +219,8 @@ object FingerTree {
     val headRight = a2
     def tailRight = One(a1)
     
-    def ::[B >: A](b: B) = Three(b, a1, a2)
-    def +[B >: A](b: B) = Three(a1, a2, b)
+    def +:[B >: A](b: B) = Three(b, a1, a2)
+    def :+[B >: A](b: B) = Three(a1, a2, b)
     
     def toTree = a1 +: Single(a2)
     
@@ -234,8 +234,8 @@ object FingerTree {
     val headRight = a3
     def tailRight = Two(a1, a2)
     
-    def ::[B >: A](b: B) = Four(b, a1, a2, a3)
-    def +[B >: A](b: B) = Four(a1, a2, a3, b)
+    def +:[B >: A](b: B) = Four(b, a1, a2, a3)
+    def :+[B >: A](b: B) = Four(a1, a2, a3, b)
     
     def toTree = a1 +: a2 +: Single(a3)
     
@@ -249,8 +249,8 @@ object FingerTree {
     val headRight = a4
     def tailRight = Three(a1, a2, a3)
     
-    def ::[B >: A](b: B) = throw new UnsupportedOperationException(":: on Four")
-    def +[B >: A](b: B) = throw new UnsupportedOperationException("+ on Four")
+    def +:[B >: A](b: B) = throw new UnsupportedOperationException(":: on Four")
+    def :+[B >: A](b: B) = throw new UnsupportedOperationException("+ on Four")
     
     def toTree = a1 +: a2 +: a3 +: Single(a4)
     
