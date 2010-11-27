@@ -80,7 +80,7 @@ class Vector[+T] private[collection] (val length: Int, trie: Case, tail: Array[A
     } else throw new IndexOutOfBoundsException(i.toString)
   }
   
-  def update[A >: T](i: Int, obj: A): Vector[A] = {
+  def updated[A >: T](i: Int, obj: A): Vector[A] = {
     if (i >= 0 && i < length) {
       if (i >= tailOff) {
         val newTail = new Array[AnyRef](tail.length)
@@ -92,11 +92,11 @@ class Vector[+T] private[collection] (val length: Int, trie: Case, tail: Array[A
         new Vector[A](length, trie(i) = obj.asInstanceOf[AnyRef], tail)
       }
     } else if (i == length) {
-      this + obj
+      this :+ obj
     } else throw new IndexOutOfBoundsException(i.toString)
   }
   
-  def +[A >: T](obj: A): Vector[A] = {
+  def :+[A >: T](obj: A): Vector[A] = {
     if (tail.length < 32) {
       val tail2 = new Array[AnyRef](tail.length + 1)
       Array.copy(tail, 0, tail2, 0, tail.length)

@@ -20,7 +20,7 @@ class FingerQueue[+A] private (deque: FingerTree[A])
   
   override def tail = new FingerQueue(deque.tailLeft)
   
-  def +[B >: A](b: B) = enqueue(b)
+  def :+[B >: A](b: B) = enqueue(b)
   
   def enqueue[B >: A](b: B) = new FingerQueue(deque :+ b)
   
