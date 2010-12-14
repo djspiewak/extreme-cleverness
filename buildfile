@@ -1,4 +1,5 @@
 Buildr.settings.build['scala.version'] = '2.8.1'
+ENV['JAVA_OPTS'] = (ENV['JAVA_OPTS'] || '') + ' -Xmx1024m'
 
 require 'buildr/scala'
 
