@@ -41,7 +41,7 @@ class BankersQueue[+A] private (private val fsize: Int, private val front: Strea
     }
   }
   
-  def +[B >: A](b: B) = enqueue(b)
+  def +:[B >: A](b: B) = enqueue(b)
   
   def enqueue[B >: A](b: B) = check(new BankersQueue(fsize, front, rsize + 1, b #:: (rear: Stream[B])))
   
